@@ -67,6 +67,17 @@ RUN sed -i \
 RUN printf '\nexport FOAM_SIGFPE=false\n' >> etc/prefs.sh
 
 # -----------------------------------------------------------------------------
+# Force NVHPC to use CUDA 12.6
+#
+# GitHub Actions runners do not have an NVIDIA driver, so NVHPC cannot
+# automatically determine the CUDA version and otherwise falls back to 11.8.
+# -----------------------------------------------------------------------------
+
+RUN sed -i \
+    's/-gpu=cc90,mem:unified,managed/-gpu=cc90,cuda12.6,mem:unified,managed/g' \
+    wmake/rules/General/Nvidia-gpu/c++
+
+# -----------------------------------------------------------------------------
 # Verify configuration before starting expensive compilation
 # -----------------------------------------------------------------------------
 
