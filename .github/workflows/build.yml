@@ -1,9 +1,8 @@
 name: Build OpenFOAM GPU H200
 
+# Manual start only. The image is built on the EC2 builder (16 vCPU / 32 GiB):
+# a hosted runner is too small for Allwmake -j 13 and its 6 h job limit.
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
